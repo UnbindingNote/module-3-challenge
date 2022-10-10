@@ -1,4 +1,5 @@
-// Assignment Code
+// Setting global variables
+
 var generateBtn = document.querySelector("#generate");
 var specialChar = [
   "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
@@ -25,25 +26,35 @@ var lowerCa = [
 var min = 7
 
 var max = 129
+// End of the global variables
 
-
-
+// Start of password generation
 function generatePassword() {
-  // debugger
+  // Debugger
+  // Asking for the length user wants
   let passwordLength = prompt('How many characters? (8-128)');
 
-  console.log(typeof passwordLength);
+  // Convert string to number
   var passwordEl = +passwordLength;
-  console.log(passwordEl);
+  // console.log(typeof passwordLength);
+  // console.log(passwordEl);
 
+  // Check if not a number, restart
   if (isNaN(passwordEl)) {
     alert("Numbers only, please!");
     return generatePassword();
   }
+  // Given password length is number, check if in range before proceeding
   else if (passwordEl > min && passwordEl < max) {
+
+    // Get valid types from user input
     var validTypes = generateTypes();
+
+    // Empty array valid types will be added to
     var types = []
 
+    // Add variables to array if confirm windows return true
+    // concat = add
     if (validTypes[0] == true) {
       types = types.concat(specialChar)
     };
@@ -57,14 +68,21 @@ function generatePassword() {
       types = types.concat(lowerCa)
     };
 
+    // Empty string to hold password
     let newPassword = "";
+
+    // Loop over password length to grab random values as selected
     for (let i = 0; i < passwordEl; i++) {
 
+      // Generates random index
       let randomNum = Math.floor(Math.random() * types.length);
+
+      // Concat values to password using random index
       newPassword = newPassword + types[randomNum]
     }
     return newPassword
   }
+  // Is a number but not within range, restart
   else {
     alert("Length has to be between 8 & 128!");
     return generatePassword();
@@ -72,7 +90,10 @@ function generatePassword() {
 
 }
 
+// Setting confirm windows to pull types used in generator
 function generateTypes() {
+
+  // Confirm windows for user to pick valid types
   let specialEl = confirm('Would you like special characters? (!@#$...)');
 
   let numberEl = confirm('Would you like numbers? (0-9)');
@@ -81,9 +102,10 @@ function generateTypes() {
 
   let lowerEl = confirm("would you like lowercase letters?");
 
+  // Returns array of booleans for types
   return [specialEl, numberEl, upperEl, lowerEl];
 }
-
+// End of the password generator
 
 
 
